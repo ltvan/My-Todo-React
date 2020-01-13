@@ -48,6 +48,19 @@ export default class TodoApp extends React.Component<any, { allIds; byIds }> {
     }));
   };
 
+  toggleTodo = id => {
+    this.setState(prev => ({
+      ...prev,
+      byIds: {
+        ...prev.byIds,
+        [id]: {
+          ...prev.byIds[id],
+          completed: !prev.byIds[id].completed
+        }
+      }
+    }));
+  };
+
   render() {
     return (
       <div className="todo-app">
@@ -55,6 +68,7 @@ export default class TodoApp extends React.Component<any, { allIds; byIds }> {
         <AddTodo addTodo={this.addTodo} />
         <TodoList
           todos={this.state.allIds.map(id => ({ ...this.state.byIds[id], id }))}
+          toggleTodo={this.toggleTodo}
         />
         {/* <VisibilityFilters /> */}
       </div>
