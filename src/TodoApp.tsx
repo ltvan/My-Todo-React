@@ -22,17 +22,37 @@ const initialState = {
   }
 };
 
+let nextId = 3;
+
 export default class TodoApp extends React.Component<any, { allIds; byIds }> {
   constructor(props) {
     super(props);
     this.state = initialState;
   }
 
+  addTodo = (input: string) => {
+    let todo: TodoItem = {
+      id: nextId++,
+      content: input
+    };
+    console.log(todo);
+    this.setState(prev => ({
+      allIds: [...prev.allIds, todo.id],
+      byIds: {
+        ...prev.byIds,
+        [todo.id]: {
+          content: todo.content,
+          completed: false
+        }
+      }
+    }));
+  };
+
   render() {
     return (
       <div className="todo-app">
         <h1>Todo List</h1>
-        <AddTodo />
+        <AddTodo addTodo={this.addTodo} />
         <TodoList
           todos={this.state.allIds.map(id => ({ ...this.state.byIds[id], id }))}
         />
