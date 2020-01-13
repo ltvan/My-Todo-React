@@ -1,9 +1,8 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { addTodo } from "../store/todos/todos.actions";
 
-export default class AddTodo extends Component<
-  { addTodo?: (input) => void },
-  { input }
-> {
+class AddTodo extends Component<{ addTodo?: (input) => void }, { input }> {
   constructor(props) {
     super(props);
     this.state = { input: "" };
@@ -39,3 +38,8 @@ export default class AddTodo extends Component<
     );
   }
 }
+
+export default connect(
+  null,
+  { addTodo }
+)(AddTodo);
